@@ -1,5 +1,15 @@
 [![Build Status](https://travis-ci.org/CSTR-Edinburgh/merlin.svg?branch=master)](https://travis-ci.org/CSTR-Edinburgh/merlin)
 
+## txt2ult
+
+Implementation of Tamás Gábor Csapó, ,,Extending Text-to-Speech Synthesis with Articulatory Movement Prediction using Ultrasound Tongue Imaging'', submitted to SSW11, 2021.
+
+txt2ult is extending the original Merlin toolkit, for text-to-ultrasound purposes.
+
+For data, the [UltraSuite-TaL](https://ultrasuite.github.io/data/tal_corpus/) corpus is used.
+
+
+
 ## Merlin: The Neural Network (NN) based Speech Synthesis System
 
 This repository contains the Neural Network (NN) based Speech Synthesis System  
