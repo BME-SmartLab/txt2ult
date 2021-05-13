@@ -1,43 +1,33 @@
-Download Merlin
+Download Merlin & txt2ult
 ---------------
 
-Step 1: git clone https://github.com/CSTR-Edinburgh/merlin.git 
+Step 1: git clone https://github.com/BME-SmartLab/txt2ult/ 
 
 Install tools
 -------------
 
-Step 2: cd merlin/tools <br/>
-Step 3: ./compile_tools.sh
+Similarly to original Merlin
 
-Demo voice
-----------
+Single speaker training
+-----------------------
 
-To run demo voice, please follow below steps:
+Please follow below steps:
  
-Step 4: cd merlin/egs/slt_arctic/s1 <br/>
-Step 5: ./run_demo.sh
-
-Demo voice trains only on 50 utterances and shouldn't take more than 5 min. 
-
-Compare the results in log files to baseline results from demo data in [RESULTS.md](https://github.com/CSTR-Edinburgh/merlin/blob/master/egs/slt_arctic/s1/RESULTS.md)
-
-Full voice
-----------
-
-To run full voice, please follow below steps:
-
-Step 6: cd merlin/egs/slt_arctic/s1 <br/>
-Step 7: ./run_full_voice.sh
-
-Full voice utilizes the whole arctic data (1132 utterances). The training of the voice approximately takes 1 to 2 hours. 
-
-Compare the results in log files to baseline results from full data in [RESULTS.md](https://github.com/CSTR-Edinburgh/merlin/blob/master/egs/slt_arctic/s1/RESULTS.md)
+Step 2: cd txt2ult/egs/txt2ult/ultrasuite-tal_fc-dnn/ <br/>
+Step 3: ./run_full_voice.sh <UltraSuite-TaL dir> <speaker> <br/>
+e.g. ./run_full_voice.sh ~/UltraSuite-TaL/TaL80/core/ 01fi 
 
 Generate new sentences
 ----------------------
 
 To generate new sentences, please follow below steps:
 
-Step 8: Run either demo voice or full voice. <br/>
-Step 9: ./merlin_synthesis.sh
+Step 4: ./08_merlin_synthesis.sh <speaker>  <br/>
+Step 5: ./09_generate_ult_video.sh <speaker> 
 
+Citation
+--------
+
+If you publish work based on Merlin & txt2ult, please cite: 
+
+Implementation of Tamás Gábor Csapó, ,,Extending Text-to-Speech Synthesis with Articulatory Movement Prediction using Ultrasound Tongue Imaging'', submitted to SSW11, 2021.
