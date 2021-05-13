@@ -10,6 +10,11 @@ For data, the [UltraSuite-TaL](https://ultrasuite.github.io/data/tal_corpus/) co
 
 additional requirement: [ultrasuite-tools](https://github.com/UltraSuite/ultrasuite-tools)
 
+txt2ult recipes:
+
+- [Single speaker training / FC-DNN](egs/txt2ult/ultrasuite-tal_fc-dnn/README.md)
+- [Single speaker training / LSTM](egs/txt2ult/ultrasuite-tal_lstm/README.md)
+
 
 ## Merlin: The Neural Network (NN) based Speech Synthesis System
 
