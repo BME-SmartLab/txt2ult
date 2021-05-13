@@ -1045,6 +1045,8 @@ def main_function(cfg):
         ref_hnr_list = prepare_file_path_list(gen_file_id_list, ref_data_dir, cfg.hnr_ext)
         # for pulsemodel vocoder
         ref_pdd_list = prepare_file_path_list(gen_file_id_list, ref_data_dir, cfg.pdd_ext)
+        # for ultrasound
+        ref_ultpca128_list = prepare_file_path_list(gen_file_id_list, ref_data_dir, cfg.ultpca128_ext)
 
         in_gen_label_align_file_list = in_label_align_file_list[cfg.train_file_number:cfg.train_file_number+cfg.valid_file_number+cfg.test_file_number]
         calculator = IndividualDistortionComp()
@@ -1053,6 +1055,7 @@ def main_function(cfg):
         bap_mse             = 0.0
         f0_mse              = 0.0
         vuv_error           = 0.0
+        ultpca128_mse       = 0.0
 
         valid_file_id_list = file_id_list[cfg.train_file_number:cfg.train_file_number+cfg.valid_file_number]
         test_file_id_list  = file_id_list[cfg.train_file_number+cfg.valid_file_number:cfg.train_file_number+cfg.valid_file_number+cfg.test_file_number]
@@ -1205,17 +1208,31 @@ def main_function(cfg):
             valid_spectral_distortion = calculator.compute_distortion(valid_file_id_list, ref_data_dir, gen_dir, cfg.pdd_ext, cfg.pdd_dim)
             test_spectral_distortion  = calculator.compute_distortion(test_file_id_list , ref_data_dir, gen_dir, cfg.pdd_ext, cfg.pdd_dim)
         
-
+        # ultrasound
+        if 'ultpca128' in cfg.in_dimension_dict:
+            if cfg.remove_silence_using_binary_labels:
+                untrimmed_reference_data = in_file_list_dict['ultpca128'][cfg.train_file_number:cfg.train_file_number+cfg.valid_file_number+cfg.test_file_number]
+                trim_silence(untrimmed_reference_data, ref_ultpca128_list, cfg.ultpca128_dim, \
+                                    untrimmed_test_labels, lab_dim, silence_feature)
+            elif cfg.remove_silence_using_hts_labels:
+                remover = SilenceRemover(n_cmp = cfg.ultpca128_dim, silence_pattern = cfg.silence_pattern, label_type=cfg.label_type)
+                remover.remove_silence(in_file_list_dict['ultpca128'][cfg.train_file_number:cfg.train_file_number+cfg.valid_file_number+cfg.test_file_number], in_gen_label_align_file_list, ref_ultpca128_list)
+            else:
+                ref_data_dir = os.path.join(data_dir, 'ultpca128')
+            valid_ultpca128_mse = calculator.compute_distortion(valid_file_id_list, ref_data_dir, gen_dir, cfg.ultpca128_ext, cfg.ultpca128_dim)
+            test_ultpca128_mse  = calculator.compute_distortion(test_file_id_list , ref_data_dir, gen_dir, cfg.ultpca128_ext, cfg.ultpca128_dim)
+            
         if cfg.vocoder_type == 'MAGPHASE':
             logger.info('Develop: DNN -- MAG: %.3f dB; REAL: %.3f dB; IMAG: %.3f dB; F0:- RMSE: %.3f Hz; CORR: %.3f; VUV: %.3f%%' \
                     %(valid_mag_mse, valid_real_mse, valid_imag_mse, valid_f0_mse, valid_f0_corr, valid_vuv_error*100.))
             logger.info('Test   : DNN -- MAG: %.3f dB; REAL: %.3f dB; IMAG: %.3f dB; F0:- RMSE: %.3f Hz; CORR: %.3f; VUV: %.3f%%' \
                     %(test_mag_mse, test_real_mse, test_imag_mse , test_f0_mse , test_f0_corr, test_vuv_error*100.))
         else:
-            logger.info('Develop: DNN -- MCD: %.3f dB; BAP: %.3f dB; F0:- RMSE: %.3f Hz; CORR: %.3f; VUV: %.3f%%' \
-                    %(valid_spectral_distortion, valid_bap_mse, valid_f0_mse, valid_f0_corr, valid_vuv_error*100.))
-            logger.info('Test   : DNN -- MCD: %.3f dB; BAP: %.3f dB; F0:- RMSE: %.3f Hz; CORR: %.3f; VUV: %.3f%%' \
-                    %(test_spectral_distortion , test_bap_mse , test_f0_mse , test_f0_corr, test_vuv_error*100.))
+            # modified for ultrasound RMSE
+            logger.info('Develop: DNN -- MCD: %.3f dB; BAP: %.3f dB; F0:- RMSE: %.3f Hz; CORR: %.3f; VUV: %.3f%%; ULTPCA128/RMSE: %.3f' \
+                    %(valid_spectral_distortion, valid_bap_mse, valid_f0_mse, valid_f0_corr, valid_vuv_error*100., valid_ultpca128_mse))
+            logger.info('Test   : DNN -- MCD: %.3f dB; BAP: %.3f dB; F0:- RMSE: %.3f Hz; CORR: %.3f; VUV: %.3f%%; ULTPCA128/RMSE: %.3f' \
+                    %(test_spectral_distortion , test_bap_mse , test_f0_mse , test_f0_corr, test_vuv_error*100., test_ultpca128_mse))
 
 if __name__ == '__main__':
 

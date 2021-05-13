@@ -8,6 +8,7 @@ txt2ult is extending the original Merlin toolkit, for text-to-ultrasound purpose
 
 For data, the [UltraSuite-TaL](https://ultrasuite.github.io/data/tal_corpus/) corpus is used.
 
+additional requirement: [ultrasuite-tools](https://github.com/UltraSuite/ultrasuite-tools)
 
 
 ## Merlin: The Neural Network (NN) based Speech Synthesis System

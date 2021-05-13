@@ -218,7 +218,10 @@ class configuration(object):
             ## For MagPhase Vocoder:
             ('in_acous_feats_dir' , os.path.join(self.work_dir, 'data/in_acoustic_feats'), 'Paths', 'in_acous_feats_dir'),
             ('nat_wav_dir'        , os.path.join(self.work_dir, 'data/nat_wavs')         , 'Paths', 'nat_wav_dir'), # Containg natural speech waveforms (for acous feat extraction).
-
+            
+            # for ultrasound
+            ('in_ultpca128_dir'   , os.path.join(self.work_dir, 'data/ultpca128')  , 'Paths', 'in_ultpca128_dir'),
+            
             # Input-Output
             ('inp_dim', 425, 'Input-Output', 'inp_dim'),
             ('out_dim', 187, 'Input-Output', 'out_dim'),
@@ -411,6 +414,10 @@ class configuration(object):
             ('dreal_dim', 45 * 3, 'Outputs', 'dreal'),
             ('imag_dim' , 45    , 'Outputs', 'imag'),
             ('dimag_dim', 45 * 3, 'Outputs', 'dimag'),
+            
+            ## csapot, ultrasound
+            ('ultpca128_dim' , 128    , 'Outputs', 'ultpca128'),
+            ('dultpca128_dim', 128 * 3, 'Outputs', 'dultpca128'),
 
         ## for joint dur:-
             ('seq_dur_dim' ,1     ,'Outputs','seq_dur'),
@@ -496,6 +503,9 @@ class configuration(object):
             ('mag_ext'   , '.mag'     , 'Extensions', 'mag_ext'),
             ('real_ext'  , '.real'    , 'Extensions', 'real_ext'),
             ('imag_ext'  , '.imag'    , 'Extensions', 'imag_ext'),
+            
+            ## csapot, ultrasound
+            ('ultpca128_ext'  , '.ultpca128'    , 'Extensions', 'ultpca128_ext'),
 
             ## joint dur
             ('dur_ext'   , '.dur'     , 'Extensions', 'dur_ext'),
@@ -695,7 +705,7 @@ class configuration(object):
                 if not self.use_high_batch_size:
                     logger.info('reducing the batch size from %s to 25' % (self.batch_size))
                     self.batch_size = 25 ## num. of sentences in this case
-
+        
         ###dimensions for the output features
         ### key name must follow the self.in_dimension_dict.
         ### If do not want to include dynamic feature, just use the same dimension as that self.in_dimension_dict
@@ -876,7 +886,12 @@ class configuration(object):
 #                current_stream_hidden_size = self.stream_dur_hidden_size
 #                current_stream_weight      = self.stream_weight_dur
             ## for joint dur (end)
-
+            
+            ### csapot, ultrasound
+            elif feature_name == 'ultpca128':
+                in_dimension = self.ultpca128_dim
+                out_dimension = self.dultpca128_dim
+                in_directory  = self.in_ultpca128_dir
 
             else:
                 logger.critical('%s feature is not supported right now. Please change the configuration.py to support it' %(feature_name))
@@ -975,6 +990,9 @@ class configuration(object):
         self.file_extension_dict['mag']  = self.mag_ext
         self.file_extension_dict['real'] = self.real_ext
         self.file_extension_dict['imag'] = self.imag_ext
+        
+        ## csapot, ultrasound
+        self.file_extension_dict['ultpca128'] = self.ultpca128_ext
 
         ## joint dur
         self.file_extension_dict['dur'] = self.dur_ext
