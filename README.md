@@ -12,9 +12,13 @@ additional requirement: [ultrasuite-tools](https://github.com/UltraSuite/ultrasu
 
 txt2ult recipes:
 
-- [Single speaker training / FC-DNN](egs/txt2ult/ultrasuite-tal_fc-dnn/README.md)
-- [Single speaker training / LSTM](egs/txt2ult/ultrasuite-tal_lstm/README.md)
+- [Single speaker training / FC-DNN recipe](egs/txt2ult/ultrasuite-tal_fc-dnn/README.md)
+- [Single speaker training / LSTM recipe](egs/txt2ult/ultrasuite-tal_lstm/README.md)
 
+txt2ult pre-trained models :
+
+- [Single speaker training / FC-DNN pre-trained model (Apr 20, 2021; 6 GB)](https://simonyi-my.sharepoint.com/:u:/g/personal/csapszi_sch_bme_hu/EZjEn2GIuSxOgH0KPB6RStABpQIHS3WCWyxrcRMmiYXIoQ?e=9ck4FR)
+- [Single speaker training / LSTM pre-trained model (May 4, 2021; 8 GB)](https://simonyi-my.sharepoint.com/:u:/g/personal/csapszi_sch_bme_hu/EVFzkEjZ4yFGhFL1_Yj5oj4BAjEHRBPrISlsEvzHMwxCNg?e=MXzTL0)
 
 ## Merlin: The Neural Network (NN) based Speech Synthesis System
 
