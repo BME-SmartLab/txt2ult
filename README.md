@@ -2,7 +2,11 @@
 
 ## txt2ult
 
-Implementation of Tamás Gábor Csapó, ,,Extending Text-to-Speech Synthesis with Articulatory Movement Prediction using Ultrasound Tongue Imaging'', ISCA 11th Speech Synthesis Workshop (SSW11), 2021, accepted, [arXiv:2107.05550](http://arxiv.org/abs/2107.05550)
+Implementation of:
+
+- Tamás Gábor Csapó, ,,Extending Text-to-Speech Synthesis with Articulatory Movement Prediction using Ultrasound Tongue Imaging'', ISCA 11th Speech Synthesis Workshop (SSW11), Budapest, Hungary, pp. 7-12. 2021, [arXiv:2107.05550](http://arxiv.org/abs/2107.05550)
+
+- Csapó Tamás Gábor, ,,Audiovizuális beszédszintézis nyelvultrahang alapon'', Beszédtudomány - Speech Science, 2022.
 
 txt2ult is extending the original Merlin toolkit, for text-to-ultrasound purposes.
 
